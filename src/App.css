@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-family: Poppins, "Roboto", sans-serif;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: #333;
+  margin-top: 55px;
+  text-align: center;
+}
+
+.form {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form p {
+  text-align: center;
+  color: #555;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input,
+textarea,
+button {
+  font-size: 14px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+textarea {
+  height: 100px;
+}
+
+input[type="file"] {
+  padding: 5px;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  padding: 12px 15px;
+}
+
+button[type="submit"]:disabled {
+  background-color: #aaa;
+}
+
+.star {
+  color: red;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.error-message {
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+  font-weight: bold;
+  padding: 5px;
+  background-color: #f8d7da;
+  border-radius: 4px;
+}
+
+.form-group input:invalid {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.form-group input:valid {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+.form-group input:invalid:focus {
+  border-color: #e74c3c;
+}
+
+.form-group input:valid:focus {
+  border-color: #4CAF50;
+}
+
+.form-group input[type="number"]:invalid {
+  border-color: #e74c3c;
+}
+
+.form-group input[type="number"]:valid {
+  border-color: #4CAF50;
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  .form {
+    padding: 15px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 18px;
+  }
+
+  .form {
+    padding: 10px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
