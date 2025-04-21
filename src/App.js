@@ -32,7 +32,7 @@ function App() {
   };
 
   const handleCaptchaChange = async (value) => {
-    const res = await axios.post("https://necalumni.nec.edu.in/api/verifycaptcha", { value });
+    const res = await axios.post("http://localhost:5000/api/verifycaptcha", { value });
     if (res.data.message === "Captcha Success") {
       setCaptchaVerified(true);
     } else if (res.data.message === "Captcha Failed") {
@@ -40,7 +40,7 @@ function App() {
     }
   };
 
-  const validateForm = () => {
+  const validateForm = () => {  
     const newErrors = {};
 
     if (!formData.name || formData.name.length < 3 || formData.name.length > 100 || !/^[A-Za-z\s]+$/.test(formData.name)) {
@@ -112,7 +112,7 @@ function App() {
     }
 
     try {
-      await axios.post('https://necalumni.nec.edu.in/api/submitFormData', formDataToSend, {
+      await axios.post('http://localhost:5000/api/submitFormData', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

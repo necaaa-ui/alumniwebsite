@@ -5,6 +5,8 @@ const axios=require('axios');
 const qs = require('qs');
 const multer = require('multer');
 const connectDB = require('./config/db');
+const formDataRoutes = require('./routes/formDataRoutes');
+const companyRoutes = require('./routes/companyRoutes');
 const FormData = require('./model/form');
 const {sendAcknowledgeEmail}=require('./service/emailService');
 
@@ -15,11 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use(cors({
-    origin: 'https://nec.edu.in',
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true, 
-}));
+
 // Serve the favicon
 const faviconPath = path.join(__dirname, 'public', 'favicon.ico');
 app.use('/favicon.ico', express.static(faviconPath));
@@ -116,6 +114,10 @@ app.post("/api/submitFormData", upload.single('attachment'), async (req, res) =>
   
 
 
+app.use('/uploads', express.static('uploads'));
+app.use('/api/companies', companyRoutes);
+app.use('/api/users', formDataRoutes);
+ 
 app.listen(5000, () => {
     console.log("Listening on port 5000");
 });
