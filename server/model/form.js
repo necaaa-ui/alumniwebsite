@@ -64,7 +64,7 @@ const formDataSchema = new mongoose.Schema({
           },
           status: {
             type: String,
-            enum: ['pending', 'submitted', 'withdrawn'],
+            enum: ['pending', 'completed', 'not applicable'],
             default: 'pending',
           },
         },

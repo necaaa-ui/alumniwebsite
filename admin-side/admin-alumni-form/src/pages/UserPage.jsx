@@ -84,34 +84,34 @@ export default function UserPage() {
                 <div className="mt-6 space-y-3">
                   <div className="flex space-x-3">
                     <button
-                      onClick={() => handleStatusChange(entry.company._id, 'submitted')}
+                      onClick={() => handleStatusChange(entry.company._id, 'completed')}
                       className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                        entry.status === 'submitted' 
+                        entry.status === 'completed' 
                           ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
                     >
-                      Submit
+                      Completed
                     </button>
 
                     <button
-                      onClick={() => handleStatusChange(entry.company._id, 'withdrawn')}
+                      onClick={() => handleStatusChange(entry.company._id, 'not applicable')}
                       className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                        entry.status === 'withdrawn' 
+                        entry.status === 'not applicable' 
                           ? 'bg-red-600 text-white hover:bg-red-700' 
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
                     >
-                      Withdraw
+                      Not applicable
                     </button>
                   </div>
 
                   <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                     <span className="text-sm text-gray-500">Status</span>
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      entry.status === 'submitted' 
+                      entry.status === 'completed' 
                         ? 'bg-emerald-100 text-emerald-800' 
-                        : entry.status === 'withdrawn'
+                        : entry.status === 'not applicable'
                         ? 'bg-red-100 text-red-800'
                         : 'bg-gray-100 text-gray-800'
                     }`}>

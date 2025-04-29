@@ -23,6 +23,7 @@ export default function CompanyForm({ refresh, editingCompany }) {
         description: editingCompany.description || '',
         skillsRequired: editingCompany.skillsRequired?.join(', ') || '',
         url: editingCompany.url || '',
+        deadline: editingCompany?.deadline || '',
         poster: null,
       });
     } else {
@@ -91,6 +92,7 @@ export default function CompanyForm({ refresh, editingCompany }) {
       description: '',
       skillsRequired: '',
       url: '',
+      deadline: '',
       poster: null,
     });
     setPreviewUrl(null);
@@ -186,6 +188,22 @@ export default function CompanyForm({ refresh, editingCompany }) {
               required
             ></textarea>
           </div>
+
+          <div className="space-y-2">
+  <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+    <FileText size={16} />
+    Application Deadline
+  </label>
+  <input
+    type="date"
+    name="deadline"
+    value={formData.deadline}
+    onChange={handleChange}
+    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+    required
+  />
+</div>
+
 
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">

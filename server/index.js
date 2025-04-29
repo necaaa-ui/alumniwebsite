@@ -9,6 +9,7 @@ const formDataRoutes = require('./routes/formDataRoutes');
 const companyRoutes = require('./routes/companyRoutes');
 const FormData = require('./model/form');
 const {sendAcknowledgeEmail}=require('./service/emailService');
+require('./cronJobs/deleteExpiredCompanies');
 
 require('dotenv').config();
 connectDB();

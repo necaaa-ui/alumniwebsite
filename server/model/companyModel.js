@@ -7,6 +7,7 @@ const companySchema = new mongoose.Schema({
   poster: String,
   skillsRequired: [String],
   url: String,
+  deadline: Date, // Added deadline field
 });
 
 module.exports = mongoose.model('CompanyData', companySchema);

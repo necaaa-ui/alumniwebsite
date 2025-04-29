@@ -12,10 +12,16 @@ exports.getCompanies = async (req, res) => {
 };
 
 exports.addCompany = async (req, res) => {
-  const { name, role, description, skillsRequired, url } = req.body;
+  const { name, role, description, skillsRequired, url, deadline } = req.body;
   const poster = req.file?.filename;
   const newCompany = new CompanyData({
-    name, role, description, poster, skillsRequired, url
+    name,
+    role,
+    description,
+    poster,
+    skillsRequired,
+    url,
+    deadline: deadline ? new Date(deadline) : null, // convert to Date object
   });
   await newCompany.save();
   res.json(newCompany);
@@ -25,6 +31,7 @@ exports.updateCompany = async (req, res) => {
   const { id } = req.params;
   const updateData = { ...req.body };
   if (req.file) updateData.poster = req.file.filename;
+  if (updateData.deadline) updateData.deadline = new Date(updateData.deadline); // ensure it's a Date object
   const company = await CompanyData.findByIdAndUpdate(id, updateData, { new: true });
   res.json(company);
 };
