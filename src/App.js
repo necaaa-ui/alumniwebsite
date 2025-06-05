@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha';
 import './App.css';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom'; // Make sure you're using react-router
+
 
 function App() {
   const [formData, setFormData] = useState({
@@ -17,6 +20,37 @@ function App() {
     message: '',
     attachment: null,
   });
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+useEffect(() => {
+  const query = new URLSearchParams(window.location.search);
+  const email = query.get('email');
+
+  if (email) {  // make sure both exist
+    axios.get(`http://localhost:5000/api/user-by-email`, {
+      params: { email }
+    })
+      .then((res) => {
+        const user = res.data;
+
+        setFormData((prev) => ({
+          ...prev,
+          name: user?.basic?.name || '',
+          email: user?.basic?.email_id || '',
+          contact: user?.contact_details?.mobile?.replace(/\D/g, '') || '',
+          batch: user?.basic?.label || '',
+          location: user?.current_location?.location || '',
+        }));
+      })
+      .catch((err) => {
+        console.error('Failed to fetch user data:', err);
+      });
+  }
+}, []);
+
 
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [errors, setErrors] = useState({});
