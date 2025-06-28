@@ -1,8 +1,9 @@
 const { application } = require('express');
 const FormData = require('../model/form');
-
+const crypto = require('crypto');
 exports.getAllUsers = async (req, res) => {
   const data = await FormData.find().populate('applicationStatus.assignedCompanyId', 'name'); 
+  console.log(data)
   res.json(data);
 };
 
@@ -15,20 +16,17 @@ exports.assignCompany = async (req, res) => {
     const user = await FormData.findById(userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    // Correctly create ObjectId from companyId string
     const companyObjectId = new mongoose.Types.ObjectId(companyId);  
     const alreadyAssigned = user.assignedCompanyId.some(
       (id) => id.toString() === companyId
     );
 
-    // Only assign the company if not already assigned
     if (!alreadyAssigned) {
       user.assignedCompanyId.push(companyObjectId);
       console.log(companyObjectId);
 
-      // Push the application status with the correct ObjectId
       user.applicationStatus.push({
-        assignedCompanyId: companyObjectId, // Proper ObjectId here
+        assignedCompanyId: companyObjectId, 
         status: 'pending',
       });
 
@@ -66,9 +64,23 @@ exports.updateApplicationStatus = async (req, res) => {
   res.json({ message: 'Application status updated' });
 };
 
+
 exports.getUserByEmail = async (req, res) => {
+  function decryptEmail(encryptedEmail,seed) {
+    const key = crypto.createHash('sha256').update(seed).digest();
+    const iv = Buffer.alloc(16, 0);
+  
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    let decrypted = decipher.update(encryptedEmail, 'base64', 'utf8');
+    decrypted += decipher.final('utf8');
+  
+    return decrypted;
+  }
   try {
-    const user = await FormData.findOne({ email: req.params.email }).populate('assignedCompanyId');
+
+      const decodedEmail = decodeURIComponent(req.params.email); 
+      let  decryptedEmail = decryptEmail(decodedEmail, process.env.SEED);  
+    const user = await FormData.findOne({ email: decryptedEmail  }).populate('assignedCompanyId');
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json(user);
   } catch (err) {

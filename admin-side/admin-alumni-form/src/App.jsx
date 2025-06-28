@@ -10,7 +10,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<AdminPage />} />
         <Route path="/companies" element={<CompanyPage />} />
-        <Route path="/user" element={<UserPage/>} />
+        <Route path="/user/:token" element={<UserPage/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,4 +1,4 @@
-const email = "sujibala7639@gmail.com";
+const email = "mersalkishore79@gmail.com";
 const seed = "123456";
 const crypto = require('crypto');
 function encryptEmail(email, seed) {
@@ -11,9 +11,9 @@ function encryptEmail(email, seed) {
   return encrypted;
 }
 
-const encryptedEmail = encryptEmail(email, seed); // from your tested function
+const encryptedEmail = encryptEmail(email, seed); 
 const encodedEmail = encodeURIComponent(encryptedEmail);
 
-// Now hit:
+
 console.log(encodedEmail)
 const url = `http://localhost:5000/api/user-by-email?email=${encodedEmail}&seed=${seed}`;

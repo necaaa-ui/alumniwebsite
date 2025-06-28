@@ -127,10 +127,8 @@ app.post("/api/verifycaptcha", async (req, res) => {
   }
 });
 
-// Serve uploads
 app.use('/uploads', express.static('uploads'));
 
-// Use routes
 app.use('/api/companies', companyRoutes);
 app.use('/api/users', formDataRoutes);
 
@@ -146,8 +144,8 @@ app.get('/api/user-by-email', async (req, res) => {
 
   if (process.env.SEED) {
     try {
-      const decodedEmail = decodeURIComponent(email); // Decode %2F etc.
-      decryptedEmail = decryptEmail(decodedEmail, process.env.SEED);  // AES decryption
+      const decodedEmail = decodeURIComponent(email); 
+      decryptedEmail = decryptEmail(decodedEmail, process.env.SEED);  
     } catch (err) {
       console.error('❌ Decryption failed:', err.message);
       return res.status(400).json({ error: 'Invalid encrypted email or seed' });

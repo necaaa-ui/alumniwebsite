@@ -3,8 +3,8 @@ import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha';
 import './App.css';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom'; // Make sure you're using react-router
-
+import { useLocation } from 'react-router-dom';
+import { getUserByEmail } from './api/formDataApi';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -21,36 +21,58 @@ function App() {
     attachment: null,
   });
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+  const [userExists, setUserExists] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState('');
 
-useEffect(() => {
-  const query = new URLSearchParams(window.location.search);
-  const email = query.get('email');
-
-  if (email) {  // make sure both exist
-    axios.get(`http://localhost:5000/api/user-by-email`, {
-      params: { email }
-    })
-      .then((res) => {
-        const user = res.data;
-
-        setFormData((prev) => ({
-          ...prev,
-          name: user?.basic?.name || '',
-          email: user?.basic?.email_id || '',
-          contact: user?.contact_details?.mobile?.replace(/\D/g, '') || '',
-          batch: user?.basic?.label || '',
-          location: user?.current_location?.location || '',
-        }));
-      })
-      .catch((err) => {
-        console.error('Failed to fetch user data:', err);
-      });
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
   }
-}, []);
 
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const email = query.get('email');
+    setUserEmail(email);
+
+    if (email) {
+      setLoading(true);
+      
+      getUserByEmail(email)
+        .then((res) => {
+          setUserExists(true);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error('User not found in getUserByEmail, trying form API:', err);
+          
+          axios.get(`http://localhost:5000/api/user-by-email`, {
+            params: { email }
+          })
+            .then((res) => {
+              const user = res.data;
+              setUserExists(false); 
+              
+              setFormData((prev) => ({
+                ...prev,
+                name: user?.basic?.name || '',
+                email: user?.basic?.email_id || '',
+                contact: user?.contact_details?.mobile?.replace(/\D/g, '') || '',
+                batch: user?.basic?.label || '',
+                location: user?.current_location?.location || '',
+              }));
+              setLoading(false);
+            })
+            .catch((formErr) => {
+              console.error('User not found in form API either:', formErr);
+              setUserExists(false);
+              setLoading(false);
+            });
+        });
+    } else {
+      setLoading(false);
+      setUserExists(false);
+    }
+  }, []);
 
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [errors, setErrors] = useState({});
@@ -72,6 +94,10 @@ useEffect(() => {
     } else if (res.data.message === "Captcha Failed") {
       setCaptchaVerified(false);
     }
+  };
+
+  const handleCheckAssignedCompanies = () => {
+    window.location.href = `http://localhost:5173/user/${userEmail}`;
   };
 
   const validateForm = () => {  
@@ -158,6 +184,54 @@ useEffect(() => {
       setIsSubmitting(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '50px' }}>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (userExists) {
+    return (
+      <div style={{ textAlign: 'center', padding: '50px' }}>
+        <div style={{ 
+          backgroundColor: '#e8f5e8', 
+          border: '1px solid #4caf50', 
+          borderRadius: '8px',
+          padding: '30px',
+          maxWidth: '500px',
+          margin: '0 auto'
+        }}>
+          <h2 style={{ color: '#2e7d32', marginBottom: '20px' }}>User Found!</h2>
+          <p style={{ marginBottom: '20px', fontSize: '16px' }}>
+            Welcome back! You are already registered in our system.
+          </p>
+          <p style={{ marginBottom: '30px', color: '#555' }}>
+            Click below to check your assigned companies and update their status.
+          </p>
+          <button 
+            onClick={handleCheckAssignedCompanies}
+            style={{
+              backgroundColor: '#4caf50',
+              color: 'white',
+              padding: '12px 24px',
+              border: 'none',
+              borderRadius: '5px',
+              fontSize: '16px',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s'
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#45a049'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#4caf50'}
+          >
+            Check Assigned Companies
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
