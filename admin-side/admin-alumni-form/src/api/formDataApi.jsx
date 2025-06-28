@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/api/users';
+const BASE_URL = 'https://alumni-job-form.onrender.com/api/users';
 
 export const getAllUsers = () => axios.get(BASE_URL);
 
