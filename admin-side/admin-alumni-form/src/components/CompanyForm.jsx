@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { addCompany, updateCompany } from '../api/companyApi';
 import { Building2, Briefcase, FileText, Globe, Upload, Wrench } from 'lucide-react';
+import './CompanyForm.css';
 
 export default function CompanyForm({ refresh, editingCompany }) {
   const [formData, setFormData] = useState({
@@ -100,20 +101,20 @@ export default function CompanyForm({ refresh, editingCompany }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-lg">
-          <Building2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+    <form onSubmit={handleSubmit} className="company-form">
+      <div className="form-header">
+        <div className="form-icon">
+          <Building2 className="icon" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h2 className="form-title">
           {editingCompany ? 'Edit Company' : 'Add New Company'}
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+      <div className="form-grid">
+        <div className="form-column">
+          <div className="form-group">
+            <label className="form-label">
               <Building2 size={16} />
               Company Name
             </label>
@@ -122,13 +123,13 @@ export default function CompanyForm({ refresh, editingCompany }) {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="form-input"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="form-group">
+            <label className="form-label">
               <Briefcase size={16} />
               Job Role
             </label>
@@ -137,13 +138,13 @@ export default function CompanyForm({ refresh, editingCompany }) {
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="form-input"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="form-group">
+            <label className="form-label">
               <Wrench size={16} />
               Required Skills
             </label>
@@ -153,13 +154,13 @@ export default function CompanyForm({ refresh, editingCompany }) {
               value={formData.skillsRequired}
               onChange={handleChange}
               placeholder="e.g., React, Node.js, TypeScript"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="form-input"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="form-group">
+            <label className="form-label">
               <Globe size={16} />
               Company URL
             </label>
@@ -169,14 +170,14 @@ export default function CompanyForm({ refresh, editingCompany }) {
               value={formData.url}
               onChange={handleChange}
               placeholder="https://example.com"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="form-input"
             />
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <div className="form-column">
+          <div className="form-group">
+            <label className="form-label">
               <FileText size={16} />
               Job Description
             </label>
@@ -184,59 +185,52 @@ export default function CompanyForm({ refresh, editingCompany }) {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 min-h-[120px]"
+              className="form-textarea"
               required
             ></textarea>
           </div>
 
-          <div className="space-y-2">
-  <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-    <FileText size={16} />
-    Application Deadline
-  </label>
-  <input
-    type="date"
-    name="deadline"
-    value={formData.deadline}
-    onChange={handleChange}
-    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-    required
-  />
-</div>
+          <div className="form-group">
+            <label className="form-label">
+              <FileText size={16} />
+              Application Deadline
+            </label>
+            <input
+              type="date"
+              name="deadline"
+              value={formData.deadline}
+              onChange={handleChange}
+              className="form-input"
+              required
+            />
+          </div>
 
-
-          <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="form-group">
+            <label className="form-label">
               <Upload size={16} />
               Company Poster
             </label>
             <div
-              className={`relative border-2 border-dashed rounded-lg p-4 text-center transition-all duration-200 ${
-                isDragging
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                  : 'border-gray-300 dark:border-gray-600'
-              }`}
+              className={`upload-area ${isDragging ? 'dragging' : ''}`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
             >
               {previewUrl ? (
-                <div className="relative group">
+                <div className="preview-container">
                   <img
                     src={previewUrl}
                     alt="Preview"
-                    className="w-full h-48 object-cover rounded-lg"
+                    className="preview-image"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center">
-                    <span className="text-white text-sm">Click or drag to change</span>
+                  <div className="preview-overlay">
+                    <span>Click or drag to change</span>
                   </div>
                 </div>
               ) : (
-                <div className="py-8">
-                  <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Drag and drop or click to upload
-                  </p>
+                <div className="upload-placeholder">
+                  <Upload className="upload-icon" />
+                  <p>Drag and drop or click to upload</p>
                 </div>
               )}
               <input
@@ -244,18 +238,15 @@ export default function CompanyForm({ refresh, editingCompany }) {
                 name="poster"
                 accept="image/*"
                 onChange={handleChange}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                className="file-input"
               />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-8 flex justify-end">
-        <button
-          type="submit"
-          className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
+      <div className="form-actions">
+        <button type="submit" className="submit-button">
           {editingCompany ? 'Update Company' : 'Add Company'}
         </button>
       </div>

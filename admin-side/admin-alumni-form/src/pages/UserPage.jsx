@@ -4,6 +4,7 @@ import { getCompanyById } from '../api/companyApi';
 import CompanyCard from '../components/CompanyCard';
 import { Building2, Loader2 } from 'lucide-react';
 import { useParams } from 'react-router-dom';
+import './UserPage.css';
 
 export default function UserPage() {
   const [user, setUser] = useState(null);
@@ -71,10 +72,10 @@ export default function UserPage() {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-indigo-600 mx-auto mb-4" />
-          <p className="text-gray-600 font-medium">Loading...</p>
+      <div className="loading-container">
+        <div className="loading-content">
+          <Loader2 className="loading-spinner" />
+          <p className="loading-text">Loading...</p>
         </div>
       </div>
     );
@@ -83,11 +84,11 @@ export default function UserPage() {
   // Error state - User not found
   if (error || !user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg max-w-md">
-            <p className="font-medium">No User Found</p>
-            <p className="text-sm mt-1">The user with this email does not exist in our system.</p>
+      <div className="error-container">
+        <div className="error-content">
+          <div className="error-message">
+            <p className="error-title">No User Found</p>
+            <p className="error-description">The user with this email does not exist in our system.</p>
           </div>
         </div>
       </div>
@@ -97,11 +98,11 @@ export default function UserPage() {
   // User found but no companies assigned
   if (user && companyData.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-6 py-4 rounded-lg max-w-md">
-            <p className="font-medium">No Companies Assigned</p>
-            <p className="text-sm mt-1">This user currently has no companies assigned.</p>
+      <div className="error-container">
+        <div className="error-content">
+          <div className="warning-message">
+            <p className="error-title">No Companies Assigned</p>
+            <p className="error-description">This user currently has no companies assigned.</p>
           </div>
         </div>
       </div>
@@ -109,30 +110,27 @@ export default function UserPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center space-x-3 mb-8">
-          <Building2 className="h-8 w-8 text-indigo-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Assigned Companies</h1>
+    <div className="user-page">
+      <div className="user-page-content">
+        <div className="page-header">
+          <Building2 className="header-icon" />
+          <h1 className="page-title">Assigned Companies</h1>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="companies-grid">
           {companyData.map((entry, idx) => (
-            <div 
-              key={entry.company._id || idx} 
-              className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200"
-            >
-              <div className="p-6">
+            <div key={entry.company._id || idx} className="company-card">
+              <div className="company-card-content">
                 <CompanyCard company={entry.company} showActions={false} />
                 
-                <div className="mt-6 space-y-3">
-                  <div className="flex space-x-3">
+                <div className="status-controls">
+                  <div className="status-buttons">
                     <button
                       onClick={() => handleStatusChange(entry.company._id, 'completed')}
-                      className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                      className={`status-button ${
                         entry.status === 'completed' 
-                          ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          ? 'status-button-completed' 
+                          : 'status-button-inactive'
                       }`}
                     >
                       Completed
@@ -140,24 +138,24 @@ export default function UserPage() {
 
                     <button
                       onClick={() => handleStatusChange(entry.company._id, 'not applicable')}
-                      className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                      className={`status-button ${
                         entry.status === 'not applicable' 
-                          ? 'bg-red-600 text-white hover:bg-red-700' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          ? 'status-button-not-applicable' 
+                          : 'status-button-inactive'
                       }`}
                     >
                       Not applicable
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                    <span className="text-sm text-gray-500">Status</span>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  <div className="status-display">
+                    <span className="status-label">Status</span>
+                    <span className={`status-badge ${
                       entry.status === 'completed' 
-                        ? 'bg-emerald-100 text-emerald-800' 
+                        ? 'status-badge-completed' 
                         : entry.status === 'not applicable'
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'status-badge-not-applicable'
+                        : 'status-badge-default'
                     }`}>
                       {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
                     </span>

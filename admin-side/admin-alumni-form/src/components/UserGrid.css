@@ -1,0 +1,253 @@
+/* UserGrid Component Styles */
+.user-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .user-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .user-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.user-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: 1px solid rgb(241 245 249);
+}
+
+.user-card:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+}
+
+.user-card-content {
+  padding: 1.5rem;
+}
+
+.user-info {
+  margin-bottom: 1.5rem;
+}
+
+.user-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.user-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(30 41 59);
+  transition: color 0.3s ease;
+}
+
+.user-card:hover .user-name {
+  color: rgb(37 99 235);
+}
+
+.user-status {
+  background-color: rgb(239 246 255);
+  color: rgb(37 99 235);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-weight: 500;
+}
+
+.user-email-container {
+  display: flex;
+  align-items: center;
+  color: rgb(71 85 105);
+  margin-bottom: 0.75rem;
+}
+
+.user-email-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  color: rgb(148 163 184);
+}
+
+.user-email {
+  font-size: 0.875rem;
+}
+
+.user-skills-container {
+  background-color: rgb(248 250 252);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  transition: background-color 0.3s ease;
+}
+
+.user-card:hover .user-skills-container {
+  background-color: rgb(239 246 255 / 0.5);
+}
+
+.user-skills-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.user-skills-icon {
+  width: 1rem;
+  height: 1rem;
+  color: rgb(100 116 139);
+  margin-right: 0.5rem;
+}
+
+.user-skills-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(51 65 85);
+}
+
+.user-skills-text {
+  font-size: 0.875rem;
+  color: rgb(71 85 105);
+}
+
+.application-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.application-status-header {
+  display: flex;
+  align-items: center;
+}
+
+.application-status-icon {
+  width: 1rem;
+  height: 1rem;
+  color: rgb(100 116 139);
+  margin-right: 0.5rem;
+}
+
+.application-status-title {
+  font-weight: 500;
+  color: rgb(30 41 59);
+}
+
+.application-item {
+  background-color: rgb(248 250 252);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 1px solid rgb(241 245 249);
+  transition: border-color 0.3s ease;
+}
+
+.user-card:hover .application-item {
+  border-color: rgb(219 234 254);
+}
+
+.application-item-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.application-item-info {
+  flex: 1;
+}
+
+.application-company-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(51 65 85);
+  margin-bottom: 0.25rem;
+}
+
+.application-status-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.status-completed {
+  background-color: rgb(236 253 245);
+  color: rgb(5 150 105);
+}
+
+.status-pending {
+  background-color: rgb(255 251 235);
+  color: rgb(217 119 6);
+}
+
+.status-not-applicable {
+  background-color: rgb(255 241 242);
+  color: rgb(220 38 38);
+}
+
+.status-default {
+  background-color: rgb(241 245 249);
+  color: rgb(71 85 105);
+}
+
+.no-applications {
+  background-color: rgb(248 250 252);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.user-card:hover .no-applications {
+  background-color: rgb(239 246 255 / 0.5);
+}
+
+.no-applications-text {
+  font-size: 0.875rem;
+  color: rgb(100 116 139);
+}
+
+.user-card-actions {
+  padding: 1rem 1.5rem;
+  background-color: rgb(248 250 252);
+  border-top: 1px solid rgb(241 245 249);
+}
+
+.assign-button {
+  width: 100%;
+  background-color: rgb(59 130 246);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.assign-button:hover {
+  background-color: rgb(37 99 235);
+}
+
+.assign-button:active {
+  background-color: rgb(29 78 216);
+}
+
+.assign-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(59 130 246 / 0.2);
+}
+
+.user-card:hover .assign-button {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
+}

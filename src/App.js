@@ -45,7 +45,7 @@ function App() {
         .catch((err) => {
           console.error('User not found in getUserByEmail, trying form API:', err);
           
-          axios.get(`http://localhost:5000/api/user-by-email`, {
+          axios.get(`https://alumni-job-form.onrender.com/api/user-by-email`, {
             params: { email }
           })
             .then((res) => {
@@ -88,7 +88,7 @@ function App() {
   };
 
   const handleCaptchaChange = async (value) => {
-    const res = await axios.post("http://localhost:5000/api/verifycaptcha", { value });
+    const res = await axios.post("https://alumni-job-form.onrender.com/api/verifycaptcha", { value });
     if (res.data.message === "Captcha Success") {
       setCaptchaVerified(true);
     } else if (res.data.message === "Captcha Failed") {

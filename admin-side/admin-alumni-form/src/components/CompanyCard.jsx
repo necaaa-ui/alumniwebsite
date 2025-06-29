@@ -1,41 +1,42 @@
 import React from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
+import './CompanyCard.css';
 
 export default function CompanyCard({ company, onDelete, onEdit, showActions = true }) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-      <div className="relative">
+    <div className="company-card">
+      <div className="image-container">
         <img
-          src={`http://localhost:5000/uploads/${company.poster}`}
-          className="h-48 w-full object-cover"
+          src={`https://alumni-job-form.onrender.com/uploads/${company.poster}`}
+          className="company-image"
           alt={`${company.name} poster`}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="image-overlay" />
       </div>
 
-      <div className="p-5">
-        <div className="space-y-3">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-1">
+      <div className="card-content">
+        <div className="content-space">
+          <h2 className="company-title">
             {company.name}
           </h2>
           
-          <div className="space-y-2">
-            <div className="flex items-center">
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="details-space">
+            <div className="role-container">
+              <span className="role-text">
                 {company.role}
               </span>
             </div>
             
-            <div className="flex flex-wrap gap-2">
+            <div className="skills-container">
               {company.skillsRequired?.map((skill, index) => (
                 <span
                   key={index}
-                  className="px-2.5 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 rounded-full"
+                  className="skill-tag"
                 >
                   {skill}
                 </span>
               )) || (
-                <span className="text-sm text-gray-500 dark:text-gray-400 italic">
+                <span className="no-skills">
                   No skills listed
                 </span>
               )}
@@ -44,10 +45,10 @@ export default function CompanyCard({ company, onDelete, onEdit, showActions = t
         </div>
 
         {showActions && (
-          <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100 dark:border-gray-700">
+          <div className="actions-container">
             <button
               onClick={() => onEdit(company)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+              className="edit-button"
               aria-label={`Edit ${company.name}`}
             >
               <Pencil size={16} />
@@ -55,7 +56,7 @@ export default function CompanyCard({ company, onDelete, onEdit, showActions = t
             </button>
             <button
               onClick={() => onDelete(company._id)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"
+              className="delete-button"
               aria-label={`Delete ${company.name}`}
             >
               <Trash2 size={16} />
@@ -66,4 +67,4 @@ export default function CompanyCard({ company, onDelete, onEdit, showActions = t
       </div>
     </div>
   );
-} 
+}

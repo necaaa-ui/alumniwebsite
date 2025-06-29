@@ -1,0 +1,266 @@
+/* UserPage Component Styles */
+
+/* Main container */
+.user-page {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .user-page {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .user-page {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Content wrapper */
+.user-page-content {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Loading state */
+.loading-container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-spinner {
+  height: 2rem;
+  width: 2rem;
+  animation: spin 1s linear infinite;
+  color: #4f46e5;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: #4b5563;
+  font-weight: 500;
+}
+
+/* Error states */
+.error-container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-content {
+  text-align: center;
+}
+
+.error-message {
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 0.5rem;
+  max-width: 28rem;
+}
+
+.error-title {
+  font-weight: 500;
+}
+
+.error-description {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.warning-message {
+  background-color: #fffbeb;
+  border: 1px solid #fcd34d;
+  color: #b45309;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 0.5rem;
+  max-width: 28rem;
+}
+
+/* Header */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.header-icon {
+  height: 2rem;
+  width: 2rem;
+  color: #4f46e5;
+}
+
+.page-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Company grid */
+.companies-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .companies-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .companies-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Company card */
+.company-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  transition: box-shadow 200ms;
+}
+
+.company-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.company-card-content {
+  padding: 1.5rem;
+}
+
+/* Status controls */
+.status-controls {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.status-button {
+  flex: 1;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 200ms;
+  border: none;
+  cursor: pointer;
+}
+
+.status-button-completed {
+  background-color: #059669;
+  color: white;
+}
+
+.status-button-completed:hover {
+  background-color: #047857;
+}
+
+.status-button-not-applicable {
+  background-color: #dc2626;
+  color: white;
+}
+
+.status-button-not-applicable:hover {
+  background-color: #b91c1c;
+}
+
+.status-button-inactive {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.status-button-inactive:hover {
+  background-color: #e5e7eb;
+}
+
+/* Status display */
+.status-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.status-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-badge-completed {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge-not-applicable {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-badge-default {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}

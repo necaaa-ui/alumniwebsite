@@ -3,6 +3,7 @@ import { getAllUsers } from '../api/formDataApi';
 import UserGrid from '../components/UserGrid';
 import AssignModal from '../components/AssignModal';
 import { Users, Loader2 } from 'lucide-react';
+import './AdminPage.css'; // Import the CSS file
 
 export default function AdminPage() {
   const [users, setUsers] = useState([]);
@@ -25,37 +26,37 @@ export default function AdminPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-indigo-600 mx-auto mb-4" />
-          <p className="text-gray-600 font-medium">Loading users...</p>
+      <div className="loading-container">
+        <div className="loading-content">
+          <Loader2 className="loading-spinner" />
+          <p className="loading-text">Loading users...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center space-x-3">
-            <Users className="h-8 w-8 text-indigo-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+    <div className="admin-page">
+      <div className="content-wrapper">
+        <div className="header-section">
+          <div className="header-left">
+            <Users className="header-icon" />
+            <h1 className="header-title">Admin Dashboard</h1>
           </div>
-          <div className="flex-shrink-0">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+          <div className="user-count-badge">
+            <span className="badge">
               {users.length} Users
             </span>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="main-card">
           {users.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No users found in the system.</p>
+            <div className="empty-state">
+              <p className="empty-text">No users found in the system.</p>
             </div>
           ) : (
-            <div className="p-6">
+            <div className="users-grid-container">
               <UserGrid
                 users={users}
                 onAssign={(userId) => {

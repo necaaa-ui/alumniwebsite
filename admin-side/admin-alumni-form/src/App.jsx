@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
 import CompanyPage from './pages/CompanyPage';
 import UserPage from './pages/UserPage';
+import './index.css';
 
 export default function App() {
   return (
