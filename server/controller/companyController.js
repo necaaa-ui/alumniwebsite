@@ -13,7 +13,7 @@ exports.getCompanies = async (req, res) => {
 
 exports.addCompany = async (req, res) => {
   const { name, role, description, skillsRequired, url, deadline } = req.body;
-  const poster = req.file?.filename;
+  const poster = req.file ? req.file.filename : null
   const newCompany = new CompanyData({
     name,
     role,

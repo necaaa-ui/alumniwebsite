@@ -48,7 +48,7 @@ export default function AssignModal({ userId, userSkill, onClose, refresh, resum
     }
   };
 
-  const getFileName = (path) => path?.split('\\').pop();
+const getFileName = (path) => path?.split(/[/\\]/).pop();
 
   return (
     <div className="modal-overlay">
@@ -92,7 +92,7 @@ export default function AssignModal({ userId, userSkill, onClose, refresh, resum
               </div>
               
               <a
-                href={`https://alumni-job-form.onrender.com/uploads/${resumePath.split('uploads\\')[1]}`}
+                href={`https://alumni-job-form.onrender.com/uploads/${resumePath}`}
                 download={getFileName(resumePath)}
                 className="download-button"
               >
