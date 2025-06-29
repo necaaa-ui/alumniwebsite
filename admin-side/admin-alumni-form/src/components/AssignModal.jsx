@@ -78,13 +78,13 @@ export default function AssignModal({ userId, userSkill, onClose, refresh, resum
               <div className={`resume-container ${isDarkMode ? 'dark' : ''}`}>
                 {resumePath.endsWith('.pdf') ? (
                   <iframe
-                    src={`https://alumni-job-form.onrender.com/uploads/${resumePath.split('uploads\\')[1]}`}
+                    src={`https://alumni-job-form.onrender.com/uploads/${resumePath}`}
                     title="Resume"
                     className="resume-iframe"
                   />
                 ) : (
                   <img
-                    src={`https://alumni-job-form.onrender.com/uploads/${resumePath.split('uploads\\')[1]}`}
+                    src={`https://alumni-job-form.onrender.com/uploads/${resumePath}`}
                     alt="User Resume"
                     className="resume-image"
                   />

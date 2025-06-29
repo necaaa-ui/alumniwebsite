@@ -85,7 +85,7 @@ app.post("/api/submitFormData", upload.single('attachment'), async (req, res) =>
       experience,
       ctc,
       message,
-      attachment: req.file ? req.file.path : null
+attachment: req.file ? req.file.filename : null
     });
     await sendAcknowledgeEmail(
       tokenNo, name, email, contact, batch, location,
