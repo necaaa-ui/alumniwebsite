@@ -172,7 +172,7 @@ function App() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/submitFormData', formDataToSend, {
+      await axios.post('https://alumni-job-form.onrender.com/api/submitFormData', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

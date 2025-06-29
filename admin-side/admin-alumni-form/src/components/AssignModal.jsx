@@ -92,7 +92,7 @@ export default function AssignModal({ userId, userSkill, onClose, refresh, resum
               </div>
               
               <a
-                href={`http://localhost:5000/uploads/${resumePath.split('uploads\\')[1]}`}
+                href={`https://alumni-job-form.onrender.com/uploads/${resumePath.split('uploads\\')[1]}`}
                 download={getFileName(resumePath)}
                 className="download-button"
               >
