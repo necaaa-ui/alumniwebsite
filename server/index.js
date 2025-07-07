@@ -52,7 +52,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-app.get('/api/hello', (req, res) => {
+app.get('/api/helo', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
