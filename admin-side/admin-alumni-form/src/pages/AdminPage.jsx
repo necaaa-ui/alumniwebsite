@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getAllUsers } from '../api/formDataApi';
 import UserGrid from '../components/UserGrid';
 import AssignModal from '../components/AssignModal';
@@ -9,6 +10,8 @@ export default function AdminPage() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate(); // ✅ Navigation hook
 
   const fetchUsers = async () => {
     try {
@@ -43,10 +46,16 @@ export default function AdminPage() {
             <Users className="header-icon" />
             <h1 className="header-title">Admin Dashboard</h1>
           </div>
-          <div className="user-count-badge">
-            <span className="badge">
-              {users.length} Users
-            </span>
+          <div className="header-right">
+            <div className="user-count-badge">
+              <span className="badge">{users.length} Users</span>
+            </div>
+            <button
+              className="go-to-company-btn"
+              onClick={() => navigate('/companies')}
+            >
+              Go to Company Page
+            </button>
           </div>
         </div>
 

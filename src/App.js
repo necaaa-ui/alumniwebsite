@@ -97,7 +97,7 @@ function App() {
   };
 
   const handleCheckAssignedCompanies = () => {
-    window.location.href = `http://localhost:5173/user/${userEmail}`;
+    window.location.href = `https://aluminiportal-final.vercel.app/user/${userEmail}`;
   };
 
   const validateForm = () => {  

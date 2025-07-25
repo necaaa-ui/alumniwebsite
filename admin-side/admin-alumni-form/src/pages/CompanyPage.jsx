@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ Add this
 import { getCompanies, deleteCompany } from '../api/companyApi';
 import CompanyCard from '../components/CompanyCard';
 import CompanyForm from '../components/CompanyForm';
@@ -9,6 +10,8 @@ export default function CompanyPage() {
   const [companies, setCompanies] = useState([]);
   const [editingCompany, setEditingCompany] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate(); // ✅ Navigation hook
 
   const fetchCompanies = async () => {
     try {
@@ -61,6 +64,12 @@ export default function CompanyPage() {
             <span className="company-count-badge">
               {companies.length} Companies
             </span>
+            <button
+              className="back-to-admin-btn"
+              onClick={() => navigate('/')}
+            >
+              Back to Admin Page
+            </button>
           </div>
         </div>
 
