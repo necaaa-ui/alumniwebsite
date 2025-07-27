@@ -12,6 +12,12 @@ export default function UserPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const {token} = useParams();
+  const detailedStatusOptions = [
+  "Received intimation from company side",
+  "Successfully cleared the rounds",
+  "Failed to qualify for further rounds",
+  "Received offer letter",
+];
   const email = token;
   console.log(email)
 
@@ -56,14 +62,14 @@ export default function UserPage() {
     }
   }, [email]);
 
-  const handleStatusChange = async (companyId, newStatus) => {
-    await updateStatus(user._id, companyId, newStatus);
+  const handleStatusChange = async (companyId, newStatus,detailedStatus) => {
+    await updateStatus(user._id, companyId, newStatus,detailedStatus);
 
     setCompanyData((prev) =>
       prev.map((entry) =>
         entry.assignedCompanyId === companyId ||
         entry.assignedCompanyId?._id === companyId
-          ? { ...entry, status: newStatus }
+          ? { ...entry, status: newStatus,detailedStatus:detailedStatus }
           : entry
       )
     );
@@ -122,26 +128,30 @@ export default function UserPage() {
             <div key={entry.company._id || idx} className="company-card">
               <div className="company-card-content">
                 <CompanyCard company={entry.company} showActions={false} />
-                
+
                 <div className="status-controls">
                   <div className="status-buttons">
                     <button
-                      onClick={() => handleStatusChange(entry.company._id, 'completed')}
+                      onClick={() =>
+                        handleStatusChange(entry.company._id, "completed")
+                      }
                       className={`status-button ${
-                        entry.status === 'completed' 
-                          ? 'status-button-completed' 
-                          : 'status-button-inactive'
+                        entry.status === "completed"
+                          ? "status-button-completed"
+                          : "status-button-inactive"
                       }`}
                     >
                       Completed
                     </button>
 
                     <button
-                      onClick={() => handleStatusChange(entry.company._id, 'not applicable')}
+                      onClick={() =>
+                        handleStatusChange(entry.company._id, "not applicable")
+                      }
                       className={`status-button ${
-                        entry.status === 'not applicable' 
-                          ? 'status-button-not-applicable' 
-                          : 'status-button-inactive'
+                        entry.status === "not applicable"
+                          ? "status-button-not-applicable"
+                          : "status-button-inactive"
                       }`}
                     >
                       Not applicable
@@ -150,15 +160,40 @@ export default function UserPage() {
 
                   <div className="status-display">
                     <span className="status-label">Status</span>
-                    <span className={`status-badge ${
-                      entry.status === 'completed' 
-                        ? 'status-badge-completed' 
-                        : entry.status === 'not applicable'
-                        ? 'status-badge-not-applicable'
-                        : 'status-badge-default'
-                    }`}>
-                      {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
+                    <span
+                      className={`status-badge ${
+                        entry.status === "completed"
+                          ? "status-badge-completed"
+                          : entry.status === "not applicable"
+                          ? "status-badge-not-applicable"
+                          : "status-badge-default"
+                      }`}
+                    >
+                      {entry.status.charAt(0).toUpperCase() +
+                        entry.status.slice(1)}
                     </span>
+                  </div>
+
+                  <div className="detailed-status-controls">
+                    <label className="status-label">Detailed Status</label>
+                    <select
+                      value={entry.detailedStatus || "Not updated"}
+                      onChange={(e) =>
+                        handleStatusChange(
+                          entry.company._id,
+                          entry.status,
+                          e.target.value
+                        )
+                      }
+                      className="detailed-status-dropdown"
+                    >
+                      <option value="Not updated">-- Select Status --</option>
+                      {detailedStatusOptions.map((status) => (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>

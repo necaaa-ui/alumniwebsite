@@ -1,6 +1,9 @@
 const { application } = require('express');
 const FormData = require('../model/form');
+const Company =require("../model/companyModel")
 const crypto = require('crypto');
+const { sendStatusUpdateEmail } = require('../utils/sendStatusUpdateEmail'); // Path to email function
+
 exports.getAllUsers = async (req, res) => {
   const data = await FormData.find().populate('applicationStatus.assignedCompanyId', 'name'); 
   console.log(data)
@@ -47,23 +50,36 @@ exports.assignCompany = async (req, res) => {
 
 
 exports.updateApplicationStatus = async (req, res) => {
-  const { userId, companyId, status } = req.body;
-  console.log(req.body)
-  const user = await FormData.findById(userId);
-  if (!user) return res.status(404).json({ message: 'User not found' });
+  const { userId, companyId, status, detailedStatus } = req.body;
 
-  const appStatus = user.applicationStatus.find((a) =>
-    a.assignedCompanyId._id.toString() === companyId
-  );
+  try {
+    const user = await FormData.findById(userId).populate('applicationStatus.assignedCompanyId');
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-  if (appStatus) {
-    appStatus.status = status;
+    const appStatus = user.applicationStatus.find(
+      (a) => a.assignedCompanyId._id.toString() === companyId
+    );
+
+    if (appStatus) {
+      appStatus.status = status || appStatus.status;
+      if (detailedStatus) {
+        appStatus.detailedStatus = detailedStatus;
+
+        const company = await Company.findById(companyId);
+
+        // Trigger email to admin
+        await sendStatusUpdateEmail(user, company, detailedStatus);
+      }
+    }
+
+    await user.save();
+    res.json({ message: 'Application status updated successfully' });
+
+  } catch (err) {
+    console.error("Error updating status:", err);
+    res.status(500).json({ message: 'Internal server error' });
   }
-
-  await user.save();
-  res.json({ message: 'Application status updated' });
 };
-
 
 exports.getUserByEmail = async (req, res) => {
   function decryptEmail(encryptedEmail,seed) {

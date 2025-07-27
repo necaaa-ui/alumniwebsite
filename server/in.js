@@ -1,4 +1,4 @@
-const email = "kanthisaranya@gmail.com";
+const email = "mersalkishore79@gmail.com";
 const seed = "123456";
 const crypto = require('crypto');
 function encryptEmail(email, seed) {

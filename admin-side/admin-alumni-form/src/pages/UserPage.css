@@ -264,3 +264,15 @@
   background-color: #f3f4f6;
   color: #1f2937;
 }
+
+.detailed-status-controls {
+  margin-top: 0.5rem;
+}
+
+.detailed-status-dropdown {
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

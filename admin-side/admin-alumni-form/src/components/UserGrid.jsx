@@ -61,29 +61,32 @@ export default function UserGrid({ users = [], onAssign }) {
                 <BadgeCheck className="application-status-icon" />
                 <h3 className="application-status-title">Application Status</h3>
               </div>
-              {user.applicationStatus && user.applicationStatus.length > 0 ? (
-                user.applicationStatus.map((appStatus, index) => (
-                  <div 
-                    key={index} 
-                    className="application-item"
-                  >
-                    <div className="application-item-content">
-                      <div className="application-item-info">
-                        <p className="application-company-name">
-                          {appStatus.assignedCompanyId?.name || 'Unknown'}
-                        </p>
-                      </div>
-                      <span className={`application-status-badge ${getStatusClass(appStatus.status)}`}>
-                        {appStatus.status}
-                      </span>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="no-applications">
-                  <p className="no-applications-text">No applications yet</p>
-                </div>
-              )}
+             {user.applicationStatus && user.applicationStatus.length > 0 ? (
+  user.applicationStatus.map((appStatus, index) => (
+    <div key={index} className="application-item">
+      <div className="application-item-content">
+        <div className="application-item-info">
+          <p className="application-company-name">
+            {appStatus.assignedCompanyId?.name || 'Unknown'}
+          </p>
+          {appStatus.detailedStatus && appStatus.detailedStatus !== 'Not updated' && (
+            <p className="application-detailed-status">
+              {appStatus.detailedStatus}
+            </p>
+          )}
+        </div>
+        <span className={`application-status-badge ${getStatusClass(appStatus.status)}`}>
+          {appStatus.status}
+        </span>
+      </div>
+    </div>
+  ))
+) : (
+  <div className="no-applications">
+    <p className="no-applications-text">No applications yet</p>
+  </div>
+)}
+
             </div>
           </div>
 

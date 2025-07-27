@@ -1,78 +1,88 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const formDataSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  tokenNo: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  contact: {
+    type: String,
+    required: true,
+  },
+  batch: {
+    type: String,
+    default: "",
+  },
+  location: {
+    type: String,
+    default: "",
+  },
+  skillset: {
+    type: String,
+    default: "",
+  },
+  company: {
+    type: String,
+    default: "",
+  },
+  experience: {
+    type: String,
+    default: "",
+  },
+  ctc: {
+    type: String,
+    default: "",
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+  attachment: {
+    type: String,
+    default: "",
+  },
+  assignedCompanyId: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CompanyData",
+      default: null,
     },
-    email: {
-        type: String,
-        required: true,
-    },
-    tokenNo:{
-        type:String,
-        required:true,
-        unique:true
-    },
-    contact: {
-        type: String,
-        required: true,
-    },
-    batch: {
-        type: String,
-        default: '',
-    },
-    location: {
-        type: String,
-        default: '',
-    },
-    skillset: {
-        type: String,
-        default: '',
-    },
-    company: {
-        type: String,
-        default: '',
-    },
-    experience: {
-        type: String,
-        default: '',
-    },
-    ctc: {
-        type: String,
-        default: '',
-    },
-    message: {
-        type: String,
-        required: true,
-    },
-    attachment: {
-        type: String,
-        default: '',
-    },
-    assignedCompanyId: [{
+  ],
+  applicationStatus: [
+    {
+      assignedCompanyId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'CompanyData',
-        default: null,
-      }],
-      applicationStatus: [
-        {
-          assignedCompanyId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'CompanyData',
-            required: true, // add this to prevent null
-          },
-          status: {
-            type: String,
-            enum: ['pending', 'completed', 'not applicable'],
-            default: 'pending',
-          },
-        },
-      ]
-      
-}
+        ref: "CompanyData",
+        required: true, // add this to prevent null
+      },
+      status: {
+        type: String,
+        enum: ["pending", "completed", "not applicable"],
+        default: "pending",
+      },
+    detailedStatus: {
+        type: String,
+        enum: [
+          "Received intimation from company side",
+          "Successfully cleared the rounds",
+          "Failed to qualify for further rounds",
+          "Received offer letter",
+          "Not updated",
+        ],
+        default: "Not updated",
+      },
+    },
+  ],
+});
 
-);
-
-const FormData = mongoose.model('FormData', formDataSchema);
+const FormData = mongoose.model("FormData", formDataSchema);
 module.exports = FormData;
