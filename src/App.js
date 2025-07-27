@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha';
 import './App.css';
+import { useLocation } from 'react-router-dom';
+import { getUserByEmail } from './api/formDataApi';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -17,6 +19,59 @@ function App() {
     message: '',
     attachment: null,
   });
+
+  const [userExists, setUserExists] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState('');
+
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const email = query.get('email');
+    setUserEmail(email);
+
+    if (email) {
+      setLoading(true);
+      
+      getUserByEmail(email)
+        .then((res) => {
+          setUserExists(true);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error('User not found in getUserByEmail, trying form API:', err);
+          
+          axios.get(`https://alumni-job-form.onrender.com/api/user-by-email`, {
+            params: { email }
+          })
+            .then((res) => {
+              const user = res.data;
+              setUserExists(false); 
+              
+              setFormData((prev) => ({
+                ...prev,
+                name: user?.basic?.name || '',
+                email: user?.basic?.email_id || '',
+                contact: user?.contact_details?.mobile?.replace(/\D/g, '') || '',
+                batch: user?.basic?.label || '',
+                location: user?.current_location?.location || '',
+              }));
+              setLoading(false);
+            })
+            .catch((formErr) => {
+              console.error('User not found in form API either:', formErr);
+              setUserExists(false);
+              setLoading(false);
+            });
+        });
+    } else {
+      setLoading(false);
+      setUserExists(false);
+    }
+  }, []);
 
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [errors, setErrors] = useState({});
@@ -38,6 +93,11 @@ function App() {
     } else if (res.data.message === "Captcha Failed") {
       setCaptchaVerified(false);
     }
+  };
+
+  const handleCheckAssignedCompanies = () => {
+    const finalemail = encodeURIComponent(userEmail);
+    window.location.href = `https://aluminiportal-final.vercel.app/user/${finalemail}`;
   };
 
   const validateForm = () => {  
@@ -124,9 +184,49 @@ function App() {
     }
   };
 
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '50px' }}>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h2>Alumni Job Request Form</h2>
+      {userExists && (
+        <div style={{ 
+          backgroundColor: '#e8f5e8', 
+          border: '1px solid #4caf50', 
+          borderRadius: '8px',
+          padding: '20px',
+          maxWidth: '500px',
+          margin: '0 auto 20px'
+        }}>
+          <h3 style={{ color: '#2e7d32', marginBottom: '15px' }}>Welcome Back!</h3>
+          <p style={{ marginBottom: '15px', fontSize: '16px' }}>
+            You are already registered. You can check your assigned companies or submit the form again.
+          </p>
+          <button 
+            onClick={handleCheckAssignedCompanies}
+            style={{
+              backgroundColor: '#4caf50',
+              color: 'white',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '5px',
+              fontSize: '14px',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s'
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#45a049'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#4caf50'}
+          >
+            Check Assigned Companies
+          </button>
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="form">
         <p>Please fill the experience form:</p>
 
@@ -273,7 +373,7 @@ function App() {
 
         <div className="form-group">
           <ReCAPTCHA
-            sitekey="6LfTa4MqAAAAAPijiIFkm7y4WOaxvYWvRR0JKTGY"
+            sitekey="6Lcd7YwrAAAAAGwwYmSZCWe4uQZE5eaunI4bFo95"
             onChange={handleCaptchaChange}
           />
         </div>
