@@ -43,7 +43,7 @@ const sendStatusUpdateEmail = async (user, company, detailedStatus) => {
       <p><strong>Message from User:</strong> ${user.message}</p>
 
       <hr/>
-      <p>This is an automated notification from NEC Alumni Job Portal.</p>
+      <p>This is   automated notification from NEC Alumni Job Portal.</p>
     `
   };
 

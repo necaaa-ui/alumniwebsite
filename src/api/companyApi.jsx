@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://alumni-job-form.onrender.com/api/companies';
+const BASE_URL = 'http://localhost:5000/api/companies';
 
 export const getCompanies = (skill) =>
   axios.get(skill ? `${BASE_URL}?skill=${skill}` : BASE_URL);

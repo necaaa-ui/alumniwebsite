@@ -78,13 +78,13 @@ const getFileName = (path) => path?.split(/[/\\]/).pop();
               <div className={`resume-container ${isDarkMode ? 'dark' : ''}`}>
                 {resumePath.endsWith('.pdf') ? (
                   <iframe
-                    src={`https://alumni-job-form.onrender.com/uploads/${resumePath}`}
+                    src={`http://localhost:5000/uploads/${resumePath}`}
                     title="Resume"
                     className="resume-iframe"
                   />
                 ) : (
                   <img
-                    src={`https://alumni-job-form.onrender.com/uploads/${resumePath}`}
+                    src={`http://localhost:5000/uploads/${resumePath}`}
                     alt="User Resume"
                     className="resume-image"
                   />
@@ -92,7 +92,7 @@ const getFileName = (path) => path?.split(/[/\\]/).pop();
               </div>
               
               <a
-                href={`https://alumni-job-form.onrender.com/uploads/${resumePath}`}
+                href={`http://localhost:5000/uploads/${resumePath}`}
                 download={getFileName(resumePath)}
                 className="download-button"
               >

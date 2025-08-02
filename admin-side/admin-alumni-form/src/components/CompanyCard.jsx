@@ -7,7 +7,7 @@ export default function CompanyCard({ company, onDelete, onEdit, showActions = t
     <div className="company-card">
       <div className="image-container">
         <img
-          src={`https://alumni-job-form.onrender.com/uploads/${company.poster}`}
+          src={`http://localhost:5000/uploads/${company.poster}`}
           className="company-image"
           alt={`${company.name} poster`}
         />
