@@ -11,7 +11,7 @@ export default function CompanyPage() {
   const [editingCompany, setEditingCompany] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const navigate = useNavigate(); // ✅ Navigation hook
+ const  navigate  = useNavigate();
 
   const fetchCompanies = async () => {
     try {

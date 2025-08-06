@@ -10,6 +10,7 @@ const companyRoutes = require('./routes/companyRoutes');
 const FormData = require('./model/form');
 const { sendAcknowledgeEmail } = require('./service/emailService');
 require('./cronJobs/deleteExpiredCompanies');
+const { decryptSSOToken } = require('vaave-sso-sdk');
 
 require('dotenv').config();
 connectDB();
@@ -145,7 +146,8 @@ app.get('/api/user-by-email', async (req, res) => {
   if (process.env.SEED) {
     try {
       const decodedEmail = decodeURIComponent(email); 
-      decryptedEmail = decryptEmail(decodedEmail, process.env.SEED);  
+      decryptedEmail = await decryptSSOToken(decodedEmail, process.env.SEED);  
+      console.log(decryptedEmail)
     } catch (err) {
       console.error('❌ Decryption failed:', err.message);
       return res.status(400).json({ error: 'Invalid encrypted email or seed' });
@@ -160,7 +162,7 @@ app.get('/api/user-by-email', async (req, res) => {
     const db = client.db('vaave');
 
     const user = await db.collection('members').findOne({
-      'basic.email_id': decryptedEmail,
+      'basic.email_id': decryptedEmail.details.email,
     });
 
     if (!user) {

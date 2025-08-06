@@ -3,6 +3,7 @@ const FormData = require('../model/form');
 const Company =require("../model/companyModel")
 const crypto = require('crypto');
 const { sendStatusUpdateEmail } = require('../utils/sendStatusUpdateEmail'); // Path to email function
+const { decryptSSOToken } = require('vaave-sso-sdk');
 
 exports.getAllUsers = async (req, res) => {
   const data = await FormData.find().populate('applicationStatus.assignedCompanyId', 'name'); 
@@ -95,8 +96,8 @@ exports.getUserByEmail = async (req, res) => {
   try {
 
       const decodedEmail = decodeURIComponent(req.params.email); 
-      let  decryptedEmail = decryptEmail(decodedEmail, process.env.SEED);  
-    const user = await FormData.findOne({ email: decryptedEmail  }).populate('assignedCompanyId');
+      let  decryptedEmail = await decryptSSOToken(decodedEmail, process.env.SEED);  
+    const user = await FormData.findOne({ email: decryptedEmail.details.email }).populate('assignedCompanyId');
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json(user);
   } catch (err) {
